@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script
+            src="http://code.jquery.com/jquery-3.3.1.js"
+            integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
+            crossorigin="anonymous"></script>
+</head>
+<body>
+    <input id="number-first" placeholder="첫번째 숫자">
+    <input id="number-second" placeholder="두번쨰 숫자">
+    <label>
+        <input type="radio" name="cal" value="+"/>
+        +
+    </label>
+    <label>
+        <input type="radio" name="cal" value="-"/>
+        -
+    </label>
+    <label>
+        <input type="radio" name="cal" value="*"/>
+        *
+    </label>
+    <label>
+        <input type="radio" name="cal" value="÷"/>
+        ÷
+    </label>
+    <button onclick="send()">전송</button>
+    <br>
+    <div id="display-response"></div>
+    <script>
+        function send(){
+            let numberFirst = $("#number-first").val();
+            let numberSecond = $("#number-second").val();
+            let cal = $(':radio[name="cal"]:checked').val();
+            $.ajax({
+                url: `cal/${numberFirst}/${numberSecond}/${cal}`,
+                type:'GET',
+                async: true,
+                success: (res) => {
+                    $('#display-response').html(JSON.stringify(res));
+                },
+                error: (err) => {
+                    $('#display-response').html(JSON.stringify(err));
+                }
+            })
+        }
+    </script>
+</body>
+</html>
